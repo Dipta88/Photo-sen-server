@@ -1,3 +1,7 @@
+
+
+
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -41,6 +45,17 @@ async function run() {
       const result = await classItemCollection.insertOne(item);
       res.send(result);
     });
+
+    app.get('/classItem', async(req, res)=>{
+        const email = req.query.email;
+        console.log(email);
+        if(!email){
+            res.send([]);
+        }
+        const query = { email: email };
+        const result = await classesCollection.find(query).toArray();
+        res.send(result);
+    })
 
     // Send a ping to confirm a successful connection
     await client.db('admin').command({ ping: 1 });
